@@ -1,0 +1,78 @@
+﻿version: '3.7'
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4
+    container_name: elasticsearch
+    environment:
+      - node.name=es01
+      - cluster.name=docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - xpack.ml.enabled=true
+      - node.roles=master,data,ingest,ml
+      - xpack.security.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+    volumes:
+       - esdata:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    cap_add:
+      - IPC_LOCK
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.13.4
+    volumes:
+      - ./logs:/usr/share/logstash/logs
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./templates/test-logs-template.json:/usr/share/logstash/templates/test-logs-template.json
+    command: logstash -f /usr/share/logstash/pipeline/logstash.conf
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.13.4
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - XPACK_SECURITY_ENABLED=false
+      - xpack.reporting.enabled=true
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+        
+  init-license:
+    image: curlimages/curl
+    container_name: init-license
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    volumes:
+      - ./scripts/init-license.sh:/init/init-license.sh:ro
+    entrypoint: ["/bin/sh", "/init/init-license.sh"]
+  
+  
+  init-ml-job:
+    image: curlimages/curl
+    container_name: init-ml-job
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    volumes:
+      - ./scripts:/init
+    entrypoint: ["/bin/sh", "/init/create-ml-job.sh"]
+
+volumes:
+  esdata:

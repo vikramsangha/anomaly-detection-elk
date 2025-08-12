@@ -1,0 +1,8 @@
+{"timestamp": "2025-07-11T09:00:00Z", "test_name": "TestLogin", "status": "success", "time": 3.3, "message": "TestLogin: success (time: 3.3s)"}
+{"timestamp": "2025-07-11T09:00:00Z", "test_name": "TestSearchProduct", "status": "success", "time": 1.6, "message": "TestSearchProduct: success (time: 1.6s)"}
+{"timestamp": "2025-07-11T09:00:00Z", "test_name": "TestAddToCart", "status": "success", "time": 2.9, "message": "TestAddToCart: success (time: 2.9s)"}
+{"timestamp": "2025-07-11T09:00:00Z", "test_name": "TestCheckout", "status": "success", "time": 2.5, "message": "TestCheckout: success (time: 2.5s)"}
+{"timestamp": "2025-07-11T09:00:00Z", "test_name": "TestInvalidLogin", "status": "failure", "time": 3.2, "message": "TestInvalidLogin: failure (time: 3.2s)"}
+{"timestamp": "2025-07-11T09:00:00Z", "test_name": "TestRemoveFromCart", "status": "success", "time": 3.0, "message": "TestRemoveFromCart: success (time: 3.0s)"}
+{"timestamp": "2025-07-11T09:00:00Z", "test_name": "TestApplyCoupon", "status": "success", "time": 3.5, "message": "TestApplyCoupon: success (time: 3.5s)"}
+{"timestamp": "2025-07-11T09:00:00Z", "test_name": "TestChangePassword", "status": "success", "time": 2.1, "message": "TestChangePassword: success (time: 2.1s)"}

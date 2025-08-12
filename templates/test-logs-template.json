@@ -1,0 +1,28 @@
+{
+  "index_patterns": ["test-logs*"],
+  "priority": 100,
+  "template": {
+    "settings": {
+      "number_of_shards": 1
+    },
+    "mappings": {
+      "properties": {
+        "test_name": {
+          "type": "keyword"
+        },
+        "status": {
+          "type": "keyword"
+        },
+        "time": {
+          "type": "float"
+        },
+        "timestamp": {
+          "type": "date"
+        },
+        "@timestamp": {
+          "type": "date"
+        }
+      }
+    }
+  }
+}
