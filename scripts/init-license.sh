@@ -5,6 +5,7 @@ until curl -s -XGET --insecure http://elasticsearch:9200; do
   sleep 5
 done
 
+
 # Check ES is reachable
 curl -s http://elasticsearch:9200
 

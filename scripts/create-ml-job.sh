@@ -1,5 +1,7 @@
 #!/bin/sh
 
+
+
 ES_HOST="http://elasticsearch:9200"
 KIBANA_HOST="http://kibana:5601"
 INDEX_NAME="test-logs"
