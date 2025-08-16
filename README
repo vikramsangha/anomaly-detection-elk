@@ -36,48 +36,10 @@ This project provides a system for detecting anomalies in **test automation logs
 docker-compose up -d
 ```
 
-### 2. Initialize the License (if required)
-```bash
-./scripts/init-license.sh
-```
-
-### 3. Load Log Data
-Place your `.ndjson` files in the `logs/` directory.  
-Logstash will read these and push them into Elasticsearch (config in `logstash.conf`).
-
-### 4. Create the Machine Learning Job
-```bash
-./scripts/create-ml-job.sh
-```
-
-### 5. Analyze Anomaly Detection Results
-```bash
-python anomaly_report.py
-```
-Reports will be available in the `reports/` directory.
-
-### 6. Visualize in Kibana
+### 2. Visualize in Kibana
 Open [http://localhost:5601](http://localhost:5601) in your browser to explore the data and ML results.
 
 ---
-
-## 📑 Log File Format
-
-- Logs are stored in **NDJSON format**  
-- Each line = one JSON object  
-- `logstash.conf` parses this format and maps fields into Elasticsearch indices  
-
----
-
-## ⚙️ Customization
-
-- **Logstash Pipeline:** edit `logstash.conf` to handle new log formats or transformations  
-- **ML Job Definition:** tweak `scripts/create-ml-job.sh` to adjust detectors, bucket spans, influencers, etc.  
-- **Reports:** extend `anomaly_report.py` for deeper analytics or custom report generation  
-
----
-
-## 📌 Next Steps
 
 - Add CI/CD integration for automated anomaly detection  
 - Enhance visualization dashboards in Kibana  
