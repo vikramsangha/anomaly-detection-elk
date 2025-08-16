@@ -1,70 +1,86 @@
-# Log Anomaly Detection Project
+# 🚀 Log Anomaly Detection Project
 
-This project provides a system for detecting anomalies in test automation logs using the Elastic Stack (Elasticsearch, Logstash, and Kibana) and a custom Python script.
+This project provides a system for detecting anomalies in **test automation logs** using the **Elastic Stack** (Elasticsearch, Logstash, Kibana) and a custom Python script.
 
-## Project Structure
+---
 
-- `README`: This file.
-- `anomaly_report.py`: A Python script for analyzing anomaly detection results.
-- `docker-compose.yml`: Docker Compose file to set up the Elastic Stack.
-- `logstash.conf`: Logstash configuration file to process log data.
-- `logs/`: Directory containing example test automation log files (e.g., `test-automation-logs-YYYYMMDD.ndjson`).
-- `reports/`: Directory for generated reports (contains a `README`).
-- `scripts/`: Directory containing helper scripts.
-    - `create-ml-job.sh`: Script to create the machine learning job in Elasticsearch.
-    - `init-license.sh`: Script to initialize the Elastic license.
-- `templates/`: Directory containing templates.
-    - `test-logs-template.json`: Elasticsearch index template for the log data.
+## 📂 Project Structure
 
-## Requirements
-
-- Docker and Docker Compose installed.
-- Basic understanding of the Elastic Stack.
-
-## Usage
-
-1. **Set up the Elastic Stack:**
-   Use the provided `docker-compose.yml` to start Elasticsearch, Logstash, and Kibana.
-   
+```text
+.
+├── anomaly_report.py        # Python script for analyzing anomaly detection results
+├── docker-compose.yml       # Docker Compose file to set up Elastic Stack
+├── logstash.conf            # Logstash configuration file to process log data
+├── logs/                    # Example log files (NDJSON format: test-automation-logs-YYYYMMDD.ndjson)
+├── reports/                 # Generated reports (with a README)
+├── scripts/                 # Helper scripts
+│   ├── create-ml-job.sh     # Script to create the ML job in Elasticsearch
+│   └── init-license.sh      # Script to initialize the Elastic license
+└── templates/               # Templates
+    └── test-logs-template.json  # Elasticsearch index template
 ```
-bash
-   docker-compose up -d
-   
-```
-2. **Initialize the License (if required):**
-   Run the `init-license.sh` script to set up the basic license for Elasticsearch.
-```
-bash
-   ./scripts/init-license.sh
-   
-```
-3. **Load Log Data:**
-   Logstash is configured to read log files from the `logs/` directory and index them into Elasticsearch. Ensure your log files are placed in this directory and match the pattern specified in `logstash.conf`. The provided example log files are in NDJSON format.
 
-4. **Create the Machine Learning Job:**
-   Execute the `create-ml-job.sh` script to define the anomaly detection job in Elasticsearch.
-```
-bash
-   ./scripts/create-ml-job.sh
-   
-```
-5. **Analyze Anomaly Detection Results:**
-   Run the `anomaly_report.py` script to process the anomaly detection results from Elasticsearch and generate reports in the `reports/` directory.
-   
-```
-bash
-   python anomaly_report.py
-   
-```
-6. **Visualize in Kibana:**
-   Access Kibana through your web browser (usually `http://localhost:5601`) to visualize the log data and the anomaly detection results.
+---
 
-## Log File Format
+## 🛠 Requirements
 
-The example log files are in NDJSON format, with each line representing a JSON object. The `logstash.conf` file is configured to parse this format and map the fields to Elasticsearch indices.
+- [Docker](https://docs.docker.com/get-docker/) and Docker Compose
+- Basic knowledge of the **Elastic Stack**
 
-## Customization
+---
 
-- **Logstash Configuration:** Modify `logstash.conf` to adapt to different log file formats or additional data processing requirements.
-- **ML Job Definition:** Adjust `scripts/create-ml-job.sh` to change the machine learning job parameters, such as detectors, buckets spans, or influencers.
-- **Anomaly Report:** Customize `anomaly_report.py` to generate different types of reports or perform more in-depth analysis of the anomaly detection results.
+## 🚦 Usage
+
+### 1. Start the Elastic Stack
+```bash
+docker-compose up -d
+```
+
+### 2. Initialize the License (if required)
+```bash
+./scripts/init-license.sh
+```
+
+### 3. Load Log Data
+Place your `.ndjson` files in the `logs/` directory.  
+Logstash will read these and push them into Elasticsearch (config in `logstash.conf`).
+
+### 4. Create the Machine Learning Job
+```bash
+./scripts/create-ml-job.sh
+```
+
+### 5. Analyze Anomaly Detection Results
+```bash
+python anomaly_report.py
+```
+Reports will be available in the `reports/` directory.
+
+### 6. Visualize in Kibana
+Open [http://localhost:5601](http://localhost:5601) in your browser to explore the data and ML results.
+
+---
+
+## 📑 Log File Format
+
+- Logs are stored in **NDJSON format**  
+- Each line = one JSON object  
+- `logstash.conf` parses this format and maps fields into Elasticsearch indices  
+
+---
+
+## ⚙️ Customization
+
+- **Logstash Pipeline:** edit `logstash.conf` to handle new log formats or transformations  
+- **ML Job Definition:** tweak `scripts/create-ml-job.sh` to adjust detectors, bucket spans, influencers, etc.  
+- **Reports:** extend `anomaly_report.py` for deeper analytics or custom report generation  
+
+---
+
+## 📌 Next Steps
+
+- Add CI/CD integration for automated anomaly detection  
+- Enhance visualization dashboards in Kibana  
+- Extend support for multiple log formats  
+
+---
